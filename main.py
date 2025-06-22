@@ -1,2 +1,4 @@
-import webParserSelenium
-import csvImport
+from webParserSelenium import parser
+from csvImport import csvImporter
+
+parser()
