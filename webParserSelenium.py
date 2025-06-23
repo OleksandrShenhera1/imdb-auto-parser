@@ -1,10 +1,12 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import fake_useragent
 import time
-
 from csvImport import csvImporter
+
 def parser():
     # Web parser for top-250 films on IMDb
     link = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
@@ -20,14 +22,18 @@ def parser():
     driver = webdriver.Chrome(options=options)
 
     driver.get(link)
+    
+
+    fullBlock = WebDriverWait(driver, 5).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "ul.ipc-metadata-list--dividers-between"))
+) 
 
     print("Spctipt Successfully Started!...")
-    time.sleep(3)
 
-    fullBlock = driver.find_element(By.CSS_SELECTOR, "ul.ipc-metadata-list--dividers-between")
-
+    WebDriverWait(driver, 10).until(
+    lambda d: fullBlock.find_elements(By.CSS_SELECTOR, "li.ipc-metadata-list-summary-item")
+)
     filmList = fullBlock.find_elements(By.CSS_SELECTOR, "li.ipc-metadata-list-summary-item")
-
     i = 0
 
     films = []
@@ -59,22 +65,5 @@ def parser():
             "runtime": filmRuntime
         }
         films.append(filmDict)
-        
-
-    if len(films) > 1:
-
-        # File name input
-        print("Enter name for file with [Films]: ", end='')
-        dictName = str(input())
-        if len(dictName) > 0:
-            if not dictName.endswith('.csv'):
-                dictName += '.csv'
-                csvImporter(films, dictName)
-            else:
-                csvImporter(films, dictName)
-        else:
-            print(f"Name {dictName} is not valid, folder will be [Autocreated]...")
-            dictName = "imdb-top250-films.csv"
-            csvImporter(films, dictName)
-    else:
-        print("Dictionary is empty...")
+    driver.quit()
+    return films

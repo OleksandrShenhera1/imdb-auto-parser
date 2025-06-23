@@ -2,7 +2,7 @@ import csv
 # Saving data to file => (fileName)
 def csvImporter(films, fileName):
     if not films:
-        print("(Error) Occurred while trying to import data to csv...")
+        print("(Error) Occurred while trying to import data to csv (try to parse again).")
         return
     try:
 
@@ -21,6 +21,6 @@ def csvImporter(films, fileName):
                 writer = csv.writer(csvfile)
                 for film in films:
                     writer.writerow(film)
-        print("Films successfully saved!...")
+        print("Films successfully saved!.")
     except Exception as e:
-        print(f"(Error) Occurred while trying to save film: {e}...")
+        print(f"(Error) Occurred while trying to save film: {e}.")
