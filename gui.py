@@ -2,6 +2,7 @@ import sys
 import customtkinter as ctk
 from logic import *
 
+
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
@@ -35,8 +36,9 @@ class mainGui(ctk.CTk):
         self.topFrame = ctk.CTkFrame(master=self.fullFrame, fg_color="#292F33", border_width=2, border_color="#E1E8ED")
         self.topFrame.pack(side="top", fill="both", expand=True, padx=5, pady=5)
         # Left frame in top
-        self.leftTopFrame = ctk.CTkFrame(master=self.topFrame, fg_color="#292F33", border_width=1, border_color="#E1E8ED")
+        self.leftTopFrame = ctk.CTkFrame(master=self.topFrame, fg_color="#292F33", border_width=1, border_color="#E1E8ED", width=360)
         self.leftTopFrame.pack(side="left", fill="both", expand=True)
+        self.leftTopFrame.pack_propagate(False) # cant be resized
         # Right frame in top
         self.rightTopFrame = ctk.CTkFrame(master=self.topFrame, fg_color="#292F33")
         self.rightTopFrame.pack(side="right", fill="both", expand=True)
@@ -44,7 +46,7 @@ class mainGui(ctk.CTk):
         self.bottomFrame = ctk.CTkFrame(master=self.fullFrame, fg_color="#292F33", border_width=1, border_color="#E1E8ED")
         self.bottomFrame.pack(side="bottom", fill="both", expand=True, padx=4, pady=2)
 
-        # Buttons
+        # Left frame in top Btn
         self.parseButton = ctk.CTkButton(master=self.leftTopFrame, text="Parse", font=("", 18), bg_color="#292F33", corner_radius=7, command=parseCheck)
         self.parseButton.pack(side="top", fill="x", padx=10, pady=8)
 
@@ -62,13 +64,18 @@ class mainGui(ctk.CTk):
 
         self.parseButton = ctk.CTkButton(master=self.leftTopFrame, text="Check ip", font=("", 18), bg_color="#292F33", corner_radius=7, command=currentIp)
         self.parseButton.pack(side="top", fill="x", padx=10, pady=8)
-        
+
+        # Right frame in top Lbl
+        self.info1Label = ctk.CTkButton(master=self.rightTopFrame, text="How to use? (link)", text_color="#E1E8ED", fg_color="#292F33", cursor="hand2", command=openManual)
+        self.info1Label.pack(pady=10)
+
+
+        self.info2Label = ctk.CTkLabel(master=self.rightTopFrame, text=instruction, anchor="center", justify="left", font=("", 14))
+        self.info2Label.pack(fill="x", padx=4, pady=20)
+
         # Console Logger
         self.textbook = ctk.CTkTextbox(self.bottomFrame)
         self.textbook.pack(fill="both", expand=True, padx=5, pady=5)
 
         sys.stdout = printLogger(self.textbook)
 
-
-app = mainGui()
-app.mainloop()

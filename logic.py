@@ -54,3 +54,20 @@ def currentIp():
     if isParsing == True:
         return
     showIp()    
+
+def openManual(event=None):
+    webbrowser.open("https://github.com/OleksandrShenhera1/imdb-auto-parser")
+    print("Manual opened.")
+
+
+instruction = (
+    "1. Recommended using VPN before parsing (server request limit)\n"
+    "\n"
+    "2. Software was developed for educational purposes.\n"
+    "\n"
+    "3. Any commercial use or use outside of an academic or research \n"
+    "    context is not intended or supported."
+)
+
+
+

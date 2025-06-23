@@ -1,6 +1,10 @@
-from webParserSelenium import parser
-from csvImport import csvImporter
-#console
+from gui import *
+from logic import *
+from ip import *
+from webParserSelenium import *
+from csvImport import *
 
-parser()
-
+# Start gui
+if __name__ == "__main__":
+    app = mainGui()
+    app.mainloop()
