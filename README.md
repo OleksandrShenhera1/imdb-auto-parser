@@ -38,6 +38,16 @@ pip install beautifulsoup4
 pip install fake-useragent
 ```
 
+---
+
+## ▶️ Usage
+
+```bash
+python main.py
+```
+
+---
+
 ## 📋 Status
 
 - **CSV**: Stable. Import is fully supported.
