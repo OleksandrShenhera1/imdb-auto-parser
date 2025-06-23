@@ -6,18 +6,18 @@ Parser with gui for IMDb-top250-films
 
 ## 📌 Features
 
--Gui for comfortable usage
--Ip checker (if using VPN)
--Save parsed information
+- Gui for comfortable usage
+- Ip checker (if using VPN)
+- Save parsed information
 
 ---
 
 ## 🛠️ Future Features
 
--Auto bot on telegram for every day check
--Daily report with all films on telegram
--SQL Database saver & changes checker
--Fixes & function updates
+- Auto bot on telegram for every day check
+- Daily report with all films on telegram
+- SQL Database saver & changes checker
+- Fixes & function updates
 
 ---
 
