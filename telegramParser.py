@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import fake_useragent
-from csvImport import csvImporter
 
 def parser():
     # Web parser for top-250 films on IMDb
@@ -39,29 +38,20 @@ def parser():
 
     for film in filmList:
         i += 1
-        # Url
-        filmUrl = film.find_element(By.CSS_SELECTOR, "a.ipc-title-link-wrapper")
-        filmHref = filmUrl.get_attribute('href')
         # Name
         filmName = film.find_element(By.CSS_SELECTOR, "h3.ipc-title__text").text
         filmNameFinal = filmName.split(". ", 1)[1] if ". " in filmName else filmName
-        # Release & Runtime
-        filmInfo = film.find_element(By.CSS_SELECTOR, "div.sc-dc48a950-7")
-        infoItems = filmInfo.find_elements(By.CSS_SELECTOR, "span.sc-dc48a950-8")
-        # Release
-        filmRelease = infoItems[0].text #if len(infoItems) > 0 else "N/A"
-        # Runtime
-        filmRuntime = infoItems[1].text #if len(infoItems) > 1 else "N/A"
+        
+        # Rating
+        filmRating = film.find_element(By.CSS_SELECTOR, "span.ipc-rating-star--rating").text
 
         # Printing info to terminal
-        print(f"{i}. {filmNameFinal} | {filmHref} | {filmRelease} | {filmRuntime}")
+        print(f"{i}. {filmNameFinal} | {filmRating}")
         
         # Saving to dictionary
         filmDict = {
             "name": filmNameFinal,
-            "url": filmHref,
-            "release": filmRelease,
-            "runtime": filmRuntime
+            "rating": filmRating
         }
         films.append(filmDict)
     driver.quit()
