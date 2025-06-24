@@ -6,5 +6,5 @@ from csvImport import *
 
 # Start gui
 if __name__ == "__main__":
-    app = mainGui()
+    app = MainGui()
     app.mainloop()

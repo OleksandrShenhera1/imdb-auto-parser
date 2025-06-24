@@ -6,7 +6,7 @@ from logic import *
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
-class printLogger:
+class PrintLogger:
     def __init__(self, textbox):
         self.textbox = textbox
 
@@ -17,12 +17,24 @@ class printLogger:
     def flush(self):
         pass
 
+class TopLvlWindow(ctk.CTkToplevel):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    # Settings
+        self.title("Settings")
+        self.resizable(width=False, height=False)
 
-class mainGui(ctk.CTk):
-    def __init__(self):
-        super().__init__()
+        # Main frame
+        self.fullFrame = ctk.CTkFrame(master=self, fg_color="#292F33")
+        self.fullFrame.pack(fill="both", expand=True)
 
-    #self = ctk.CTk()
+        btnPossX, btnPossY = parent.settingsButton.winfo_rootx(), parent.settingsButton.winfo_rooty()
+        self.geometry(f"600x360+{btnPossX + 200}+{btnPossY}")
+
+class MainGui(ctk.CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     # Settings
         self.title("Imdb-parser")
         self.geometry("1080x720")
@@ -56,7 +68,7 @@ class mainGui(ctk.CTk):
         self.folderButton = ctk.CTkButton(master=self.leftTopFrame, text="View file folder", font=("", 18), bg_color="#292F33", corner_radius=7, command=openFolderBtn)
         self.folderButton.pack(side="top", fill="x", padx=10, pady=8)
 
-        self.settingsButton = ctk.CTkButton(master=self.leftTopFrame, text="Settings", font=("", 18), bg_color="#292F33", corner_radius=7)
+        self.settingsButton = ctk.CTkButton(master=self.leftTopFrame, text="Settings", font=("", 18), bg_color="#292F33", corner_radius=7, command=self.openSettings)
         self.settingsButton.pack(side="top", fill="x", padx=10, pady=8)
 
         self.githubButton = ctk.CTkButton(master=self.leftTopFrame, text="GitHub Profile", font=("", 18), bg_color="#292F33", corner_radius=7, command=githubProfileBtn)
@@ -77,5 +89,13 @@ class mainGui(ctk.CTk):
         self.textbook = ctk.CTkTextbox(self.bottomFrame)
         self.textbook.pack(fill="both", expand=True, padx=5, pady=5)
 
-        sys.stdout = printLogger(self.textbook)
+        sys.stdout = PrintLogger(self.textbook)
 
+        self.topLvlSettings = None
+
+    def openSettings(self):
+        if self.topLvlSettings is None or not self.topLvlSettings.winfo_exists():
+            self.topLvlSettings = TopLvlWindow(self) # Create window if None
+            self.topLvlSettings.grab_set()
+        else:
+            self.topLvlSettings.focus() # If exists display it
